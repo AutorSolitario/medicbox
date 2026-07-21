@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>· · ·</title>
+  <link rel="stylesheet" href="assets/css/sapita.css">
+</head>
+
+<body>
+
+  <div class="cielo" aria-hidden="true">
+    <div class="luz luz--1"></div>
+    <div class="luz luz--2"></div>
+  </div>
+
+  <main class="hoja-sapita" id="hoja" style="visibility: hidden;">
+
+    <img class="sapito-img" src="assets/images/sapito-secreto.png" alt="Un pequeño sapito">
+
+    <p class="detalle-superior">
+      28 de julio de 2026 — para siempre en nuestra historia
+    </p>
+
+    <h1 class="titulo-sapita">
+      Para mi Sapita 💙
+    </h1>
+
+    <p class="subtitulo-sapita">
+      Después de todo lo que vivimos, preparé este lugar para decirle
+      algo que ya no quiero volver a esconder.
+    </p>
+
+    <section class="carta-sapita" aria-live="polite">
+      <!-- La carta descifrada se insertará aquí mediante JavaScript. -->
+    </section>
+
+    <p class="firma-sapita">
+      Con todo mi amor,<br>
+      su Sapito 💙
+    </p>
+
+    <button class="cerrar-sapita" id="btn-cerrar" type="button">
+      Cerrar nuestro rincón
+    </button>
+
+  </main>
+
+  <script src="assets/js/sapita-content.js"></script>
+
+  <script>
+    "use strict";
+
+    function b64aBytes(b64){
+      return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    }
+
+    const keyB64 = sessionStorage.getItem("medicbox_sapita_key");
+
+    if (!keyB64) {
+      location.replace("acceso-sapita.html");
+    } else {
+      mostrarCarta().catch(() => {
+        limpiarAcceso();
+        location.replace("acceso-sapita.html");
+      });
+    }
+
+    async function mostrarCarta(){
+      const cfg = window.SAPITA_CIFRADO;
+      if (!cfg?.iv || !cfg?.contenido) {
+        throw new Error("No se encontró el contenido cifrado.");
+      }
+
+      const iv = b64aBytes(cfg.iv);
+      const contenidoCifrado = b64aBytes(cfg.contenido);
+      const claveGuardada = b64aBytes(keyB64);
+
+      const clave = await crypto.subtle.importKey(
+        "raw", claveGuardada, { name: "AES-GCM" }, false, ["decrypt"]
+      );
+
+      const contenidoDescifrado = await crypto.subtle.decrypt(
+        { name: "AES-GCM", iv }, clave, contenidoCifrado
+      );
+
+      const cartaHTML = new TextDecoder().decode(contenidoDescifrado);
+      document.querySelector(".carta-sapita").innerHTML = cartaHTML;
+
+      document.getElementById("hoja").style.visibility = "visible";
+
+      crearDecoracion();
+      revelarFotos();   // efecto de aparición de las fotos al hacer scroll
+    }
+
+    /* Muestra cada foto con una animación cuando entra en pantalla */
+    function revelarFotos(){
+      const fotos = document.querySelectorAll(".foto-reveal");
+      if (!("IntersectionObserver" in window)) {
+        fotos.forEach(f => f.classList.add("visible"));
+        return;
+      }
+      const io = new IntersectionObserver((entradas) => {
+        entradas.forEach(ent => {
+          if (ent.isIntersecting) { ent.target.classList.add("visible"); io.unobserve(ent.target); }
+        });
+      }, { threshold: 0.2 });
+      fotos.forEach(f => io.observe(f));
+    }
+
+    function crearDecoracion(){
+      const cielo = document.querySelector(".cielo");
+      for (let i = 0; i < 12; i++) {
+        const corazon = document.createElement("div");
+        corazon.className = "corazon-flota";
+        corazon.textContent = "💙";
+        corazon.style.left = `${Math.random() * 100}vw`;
+        corazon.style.fontSize = `${12 + Math.random() * 16}px`;
+        corazon.style.animationDuration = `${10 + Math.random() * 8}s`;
+        corazon.style.animationDelay = `${Math.random() * 8}s`;
+        cielo.appendChild(corazon);
+      }
+    }
+
+    function limpiarAcceso(){
+      sessionStorage.removeItem("medicbox_sapita_key");
+      const carta = document.querySelector(".carta-sapita");
+      if (carta) carta.innerHTML = "";
+    }
+
+    document.getElementById("btn-cerrar").addEventListener("click", () => {
+      limpiarAcceso();
+      document.getElementById("hoja").style.visibility = "hidden";
+      location.replace("nosotros.html");
+    });
+  </script>
+
+</body>
+</html>
