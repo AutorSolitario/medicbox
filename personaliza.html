@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personaliza tu MEDIC BOX | MEDIC BOX</title>
+  <meta name="description" content="Configura tu estuche térmico MEDIC BOX paso a paso: modelo, color, nombre, identificación médica y accesorios, con el precio actualizado en vivo.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="page-head">
+    <div class="contenedor">
+      <p class="migas"><a href="index.html">Inicio</a> / Personaliza</p>
+      <h1>Personaliza tu MEDIC BOX</h1>
+      <p>Hazlo único: elige modelo, color, identificación y accesorios. El precio se actualiza en tiempo real.</p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="config-layout" id="configurador">
+        <div class="pasos">
+          <div class="paso"><h3><span class="num">1</span> Elige tu modelo</h3><div class="opciones" id="paso-modelo"></div></div>
+          <div class="paso"><h3><span class="num">2</span> Elige el color</h3><div class="opciones" id="paso-color"></div></div>
+          <div class="paso"><h3><span class="num">3</span> Nombre e identificación</h3><div id="paso-id"></div></div>
+          <div class="paso"><h3><span class="num">4</span> Accesorios</h3><div class="opciones" id="paso-accesorios"></div></div>
+        </div>
+
+        <aside class="resumen-precio">
+          <h3><i class="fa-solid fa-clipboard-list"></i> Resumen (paso 5)</h3>
+          <ul id="resumen-lista"></ul>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem">
+            <span>Total</span><span class="total" id="resumen-total">$0.00</span>
+          </div>
+          <button class="btn btn--acento btn--bloque" id="btn-agregar-pers" style="margin-top:1rem"><i class="fa-solid fa-cart-plus"></i> Personalizar mi MEDIC BOX</button>
+          <p style="font-size:.8rem;opacity:.85;margin-top:.8rem">La personalización tarda de 1 a 2 días (diseños especiales, 2 a 4 días).</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/personaliza.js"></script>
+  <script src="js/layout.js"></script>
+</body>
+</html>

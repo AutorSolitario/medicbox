@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preguntas frecuentes | MEDIC BOX</title>
+  <meta name="description" content="Resuelve tus dudas sobre el uso de MEDIC BOX: geles, personalización, entregas, garantía y postventa.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="page-head">
+    <div class="contenedor">
+      <p class="migas"><a href="index.html">Inicio</a> / FAQ</p>
+      <h1>Preguntas frecuentes</h1>
+      <p>¿Tienes alguna duda? Encuentra información sobre el uso de MEDIC BOX, la preparación de los geles, personalización, entregas, garantía y servicio postventa. Si necesitas ayuda adicional, nuestro equipo estará encantado de atenderte.</p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="acordeon" id="acordeon"></div>
+
+      <div class="centro" style="margin-top:2.5rem;background:var(--gris-claro);padding:2rem;border-radius:var(--radio)">
+        <h2 style="font-size:1.3rem">¿No encontraste la respuesta que buscabas?</h2>
+        <p style="color:var(--gris);margin:.6rem 0 1rem">Escríbenos por WhatsApp y recibe atención personalizada para elegir, utilizar o cuidar tu MEDIC BOX.</p>
+        <a href="https://wa.me/593999896524" target="_blank" rel="noopener" class="btn btn--primario"><i class="fa-brands fa-whatsapp"></i> Hablar con un asesor</a>
+      </div>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    const FAQS = [
+      ["¿Qué es MEDIC BOX?","MEDIC BOX es un estuche térmico diseñado para transportar insulinas y medicamentos termolábiles conservando la cadena de frío durante tus actividades diarias."],
+      ["¿Qué incluye la MEDIC BOX Original?","Incluye el estuche de 18×13×7 cm, cuatro geles refrigerantes reutilizables, un compartimento interno organizado y una guía de uso."],
+      ["¿Cuánto tiempo mantiene frescos los medicamentos?","Aproximadamente de 6 a 8 horas, dependiendo de la temperatura ambiente y de la correcta preparación de los geles."],
+      ["¿Qué temperatura puede mantener?","Ayuda a mantener el interior aproximadamente entre 2 y 8 °C durante el traslado."],
+      ["¿Cómo preparo los geles?","Congélalos de 6 a 8 horas antes de usarlos para que rindan al máximo."],
+      ["¿El medicamento debe tocar los geles?","No. Utiliza los separadores para evitar el contacto directo entre el medicamento y los geles."],
+      ["¿Sirve solo para insulina?","No. También sirve para otros medicamentos termolábiles que requieran conservar la cadena de frío."],
+      ["¿Puedo usarla a diario?","Sí, está diseñada para el uso diario, cómodo y discreto."],
+      ["¿Puedo llevarla de viaje?","Sí. Para viajes recomendamos el modelo Travel, con geles extra y, si lo deseas, un termómetro."],
+      ["¿Puedo personalizarla?","Sí. Puedes elegir color, nombre, identificación médica y accesorios en la sección Personaliza."],
+      ["¿Cuánto tarda la personalización?","Entre 1 y 2 días; los diseños especiales tardan de 2 a 4 días."],
+      ["¿Puedo comprar geles adicionales?","Sí, ofrecemos geles individuales y packs de recarga en la tienda."],
+      ["¿Los geles son reutilizables?","Sí, los geles son reutilizables: basta con volver a congelarlos."],
+      ["¿Qué accesorios puedo agregar?","Separadores, correa, fundas, identificación médica, termómetros y más. Míralos en la tienda por categoría."],
+      ["¿Cómo sé qué modelo necesito?","Usa nuestra herramienta \"Ayúdame a elegir\" o escríbenos por WhatsApp y te asesoramos."],
+      ["¿Realizan entregas a domicilio?","Sí, realizamos entregas en Quito y en todo el Ecuador."],
+      ["¿Cuánto tarda la entrega?","Quito: 1 a 2 días; valles: 1 a 3 días; otras ciudades: 2 a 5 días. Los productos personalizados suman de 2 a 4 días."],
+      ["¿Puedo retirar personalmente?","Sí, puedes retirar tu pedido en un punto acordado sin costo."],
+      ["¿Tiene garantía?","Sí, 30 días de garantía por defectos de fabricación."],
+      ["¿Puedo cambiar o devolver?","Sí, dentro de las 48 horas. Los productos personalizados solo se cambian por defecto de fabricación."],
+      ["¿Cómo la limpio?","Con un paño húmedo; deja secar al aire. No la sumerjas en agua, no uses cloro ni lavadora."],
+      ["¿Y si necesito más de 8 horas de conservación?","Recomendamos el modelo Travel con geles adicionales y un termómetro para mayor control."],
+      ["¿Ofrecen asesoría postventa?","Sí, contamos con seguimiento y soporte postventa gratuito por WhatsApp."],
+      ["¿Cómo me comunico con ustedes?","Con Sofy Zambrano por WhatsApp o teléfono al +593 999 896 524. Horario: Lun–Vie 08:30–18:00 y Sáb 09:00–14:00.<br><a class='btn btn--primario' style='margin-top:.8rem' href='https://wa.me/593999896524' target='_blank' rel='noopener'><i class='fa-brands fa-whatsapp'></i> Hablar con Sofy por WhatsApp</a>"]
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const cont = document.getElementById("acordeon");
+      FAQS.forEach((f, i) => {
+        cont.insertAdjacentHTML("beforeend", `
+          <div class="faq-item">
+            <button class="faq-pregunta" aria-expanded="false" aria-controls="faq-r${i}"><span>${f[0]}</span><i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-respuesta" id="faq-r${i}"><p>${f[1]}</p></div>
+          </div>`);
+      });
+      cont.querySelectorAll(".faq-pregunta").forEach(btn => btn.addEventListener("click", () => {
+        const item = btn.closest(".faq-item");
+        const resp = item.querySelector(".faq-respuesta");
+        const abierto = item.classList.toggle("abierto");
+        btn.setAttribute("aria-expanded", abierto);
+        resp.style.maxHeight = abierto ? resp.scrollHeight + "px" : null;
+      }));
+    });
+  </script>
+</body>
+</html>

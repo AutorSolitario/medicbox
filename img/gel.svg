@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Gel refrigerante">
+  <rect width="400" height="320" fill="#EEF4FB"/>
+  <g transform="translate(120,70)">
+    <rect x="0" y="0" width="160" height="180" rx="18" fill="#4FC3F7" opacity=".85"/>
+    <rect x="0" y="0" width="160" height="180" rx="18" fill="none" stroke="#1565C0" stroke-width="4"/>
+    <g fill="#FFFFFF" opacity=".8"><circle cx="45" cy="45" r="10"/><circle cx="115" cy="70" r="8"/><circle cx="70" cy="120" r="11"/><circle cx="120" cy="140" r="7"/></g>
+    <path d="M80 40 l14 26 -28 0 z M80 150 l14 -26 -28 0 z M50 95 l26 14 0 -28 z M110 95 l-26 14 0 -28 z" fill="#1565C0" opacity=".7"/>
+  </g>
+</svg>

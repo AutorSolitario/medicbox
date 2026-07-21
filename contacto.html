@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | MEDIC BOX</title>
+  <meta name="description" content="Contáctanos: WhatsApp, correo, teléfono y redes sociales. Atención de lunes a sábado. Estamos para ayudarte a proteger tu tratamiento.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="page-head">
+    <div class="contenedor">
+      <p class="migas"><a href="index.html">Inicio</a> / Contacto</p>
+      <h1>Contáctanos</h1>
+      <p>Estamos para ayudarte a elegir, usar o cuidar tu MEDIC BOX.</p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor contacto-grid">
+      <div>
+        <h2 style="font-size:1.4rem;margin-bottom:1rem">Escríbenos</h2>
+        <form data-web3form data-asunto="Nuevo mensaje de contacto — MEDIC BOX">
+          <div class="campo"><label for="c-nombre">Nombre *</label><input type="text" id="c-nombre" name="nombre" required></div>
+          <div class="campo"><label for="c-correo">Correo electrónico *</label><input type="email" id="c-correo" name="correo" required></div>
+          <div class="campo"><label for="c-tel">Teléfono / WhatsApp</label><input type="tel" id="c-tel" name="telefono"></div>
+          <div class="campo"><label for="c-mensaje">Mensaje *</label><textarea id="c-mensaje" name="mensaje" rows="5" required></textarea></div>
+          <button type="submit" class="btn btn--primario"><i class="fa-solid fa-paper-plane"></i> Enviar mensaje</button>
+          <div data-estado style="display:none"></div>
+        </form>
+      </div>
+
+      <div>
+        <h2 style="font-size:1.4rem;margin-bottom:1rem">Canales de atención</h2>
+        <div class="canal"><i class="fa-brands fa-whatsapp"></i><div><b>WhatsApp Business (principal)</b><br><a href="https://wa.me/593999896524" target="_blank" rel="noopener">+593 99 896 524</a><br><small style="color:var(--gris)">Asesora: Sofy Zambrano</small></div></div>
+        <div class="canal"><i class="fa-solid fa-phone"></i><div><b>Teléfono</b><br>+593 99 896 524</div></div>
+        <div class="canal"><i class="fa-solid fa-envelope"></i><div><b>Correo</b><br><a href="mailto:hola@medicbox.ec">hola@medicbox.ec</a></div></div>
+        <div class="canal"><i class="fa-brands fa-facebook-f"></i><div><b>Facebook</b><br><a href="https://www.facebook.com/" target="_blank" rel="noopener">MEDIC BOX Ecuador</a></div></div>
+        <div class="canal"><i class="fa-brands fa-instagram"></i><div><b>Instagram</b><br><a href="https://www.instagram.com/" target="_blank" rel="noopener">@medicbox.ec</a></div></div>
+        <div class="canal"><i class="fa-solid fa-clock"></i><div><b>Horario de atención</b><br>Lun–Vie 08:30–18:00 · Sáb 09:00–14:00<br><small style="color:var(--gris)">Fuera de horario respondemos el siguiente día laborable.</small></div></div>
+        <div class="canal" style="border-bottom:0"><i class="fa-solid fa-location-dot"></i><div><b>Ubicación</b><br>Quito, Ecuador</div></div>
+      </div>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    // Prefiere el asunto de la URL (p. ej. solicitudes de revisión desde la tienda)
+    document.addEventListener("DOMContentLoaded", () => {
+      const asunto = new URLSearchParams(location.search).get("asunto");
+      if(asunto && asunto.startsWith("revision-")){
+        const id = asunto.replace("revision-","");
+        const prod = obtenerProducto(id);
+        const ta = document.getElementById("c-mensaje");
+        if(ta) ta.value = `Hola, quiero solicitar una revisión para: ${prod?prod.nombre:id}. `;
+      }
+    });
+  </script>
+</body>
+</html>

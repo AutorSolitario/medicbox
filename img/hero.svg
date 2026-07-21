@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <!-- Case body -->
+    <linearGradient id="hCaseBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#5B93DC"/>
+      <stop offset="45%" stop-color="#2E62B0"/>
+      <stop offset="100%" stop-color="#123063"/>
+    </linearGradient>
+    <linearGradient id="hCaseLid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#7DB0EA"/>
+      <stop offset="100%" stop-color="#356CBE"/>
+    </linearGradient>
+    <linearGradient id="hGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#FFD54A"/>
+      <stop offset="100%" stop-color="#E39605"/>
+    </linearGradient>
+    <linearGradient id="hShield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#D8E6F7"/>
+    </linearGradient>
+    <linearGradient id="hPen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#EAF3FF"/>
+      <stop offset="100%" stop-color="#B9D4F2"/>
+    </linearGradient>
+    <radialGradient id="hFrost" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#BFEBFF" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="#8FD4FF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#8FD4FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="hHalo" cx="50%" cy="45%" r="55%">
+      <stop offset="0%"  stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Reusable snowflake -->
+    <g id="flake" stroke-linecap="round" stroke="#DFF4FF" fill="none">
+      <g stroke-width="3">
+        <line x1="0" y1="-16" x2="0" y2="16"/>
+        <line x1="-14" y1="-8" x2="14" y2="8"/>
+        <line x1="-14" y1="8" x2="14" y2="-8"/>
+      </g>
+      <g stroke-width="2.4">
+        <path d="M0 -16 l-4 -4 M0 -16 l4 -4  M0 16 l-4 4 M0 16 l4 4"/>
+        <path d="M-14 -8 l-5 0 M-14 -8 l-1 -5  M14 8 l5 0 M14 8 l1 5"/>
+        <path d="M-14 8 l-5 0 M-14 8 l-1 5  M14 -8 l5 0 M14 -8 l1 -5"/>
+      </g>
+    </g>
+  </defs>
+
+  <!-- decorative haloes (echo the hero's faint circles) -->
+  <circle cx="320" cy="300" r="255" fill="url(#hHalo)"/>
+  <circle cx="320" cy="300" r="230" fill="none" stroke="#FFFFFF" stroke-opacity="0.10" stroke-width="2"/>
+  <circle cx="150" cy="140" r="70"  fill="none" stroke="#FFFFFF" stroke-opacity="0.10" stroke-width="2"/>
+
+  <!-- cold aura behind case -->
+  <circle cx="320" cy="360" r="210" fill="url(#hFrost)"/>
+
+  <!-- ground shadow -->
+  <ellipse cx="330" cy="540" rx="185" ry="26" fill="#0B1E44" opacity="0.22"/>
+
+  <!-- ============ THERMAL CASE ============ -->
+  <g stroke="#0E2359" stroke-width="5" stroke-linejoin="round">
+    <!-- handle -->
+    <path d="M250 250 q75 -58 150 0 v20 q-75 -42 -150 0 z" fill="url(#hCaseLid)"/>
+    <!-- body -->
+    <rect x="185" y="270" width="290" height="215" rx="34" fill="url(#hCaseBody)"/>
+    <!-- top highlight strip -->
+    <rect x="205" y="286" width="250" height="40" rx="20" fill="#8CBDF0" opacity="0.32" stroke="none"/>
+    <!-- lid seam -->
+    <path d="M191 348 h278" fill="none" stroke="#0E2359" stroke-width="4" opacity="0.7"/>
+  </g>
+
+  <!-- zipper -->
+  <path d="M191 348 h278" fill="none" stroke="url(#hGold)" stroke-width="9" stroke-linecap="round"/>
+  <g stroke="#B87604" stroke-width="2.4" opacity="0.8">
+    <path d="M205 342 v12 M223 342 v12 M241 342 v12 M259 342 v12 M277 342 v12 M295 342 v12 M313 342 v12 M331 342 v12 M349 342 v12 M367 342 v12 M385 342 v12 M403 342 v12 M421 342 v12 M439 342 v12 M457 342 v12"/>
+  </g>
+  <circle cx="475" cy="348" r="12" fill="url(#hGold)" stroke="#B87604" stroke-width="2.5"/>
+  <path d="M475 360 q18 8 15 30" fill="none" stroke="url(#hGold)" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- shield + cross badge -->
+  <g transform="translate(330 415)">
+    <path d="M0 -58 C28 -50 50 -50 58 -43 C58 8 44 44 0 64 C-44 44 -58 8 -58 -43 C-50 -50 -28 -50 0 -58 Z"
+          fill="url(#hShield)" stroke="#F4AC05" stroke-width="6"/>
+    <g fill="#22519B">
+      <rect x="-11" y="-33" width="22" height="66" rx="5"/>
+      <rect x="-33" y="-11" width="66" height="22" rx="5"/>
+    </g>
+    <rect x="-8" y="-29" width="6" height="58" rx="3" fill="#5DADDE" opacity="0.5"/>
+  </g>
+
+  <!-- ============ INSULIN PEN ============ -->
+  <g transform="translate(505 250) rotate(28)">
+    <rect x="-16" y="-8" width="150" height="34" rx="17" fill="url(#hPen)" stroke="#2E62B0" stroke-width="3"/>
+    <!-- cap -->
+    <rect x="-16" y="-8" width="46" height="34" rx="17" fill="#2E62B0"/>
+    <rect x="-8" y="-2" width="6" height="22" rx="3" fill="#8CBDF0"/>
+    <!-- dose dial -->
+    <rect x="118" y="-11" width="26" height="40" rx="10" fill="#FCC606" stroke="#B87604" stroke-width="2.5"/>
+    <line x1="123" y1="-4" x2="123" y2="22" stroke="#B87604" stroke-width="2"/>
+    <line x1="131" y1="-4" x2="131" y2="22" stroke="#B87604" stroke-width="2"/>
+    <line x1="139" y1="-4" x2="139" y2="22" stroke="#B87604" stroke-width="2"/>
+    <!-- window -->
+    <rect x="46" y="2" width="60" height="14" rx="7" fill="#EAF3FF" stroke="#2E62B0" stroke-width="2"/>
+  </g>
+
+  <!-- ============ VIAL ============ -->
+  <g transform="translate(150 380) rotate(-14)">
+    <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#C9DEF5" stroke="#2E62B0" stroke-width="3"/>
+    <rect x="-20" y="-2" width="40" height="86" rx="12" fill="#EAF3FF" stroke="#2E62B0" stroke-width="3"/>
+    <rect x="-20" y="34" width="40" height="50" rx="12" fill="#BFE0FF" stroke="none"/>
+    <line x1="-8" y1="8" x2="-8" y2="20" stroke="#9FC3EC" stroke-width="2"/>
+  </g>
+
+  <!-- ============ LOCATION PIN ============ -->
+  <g transform="translate(455 470)">
+    <path d="M0 60 C-34 22 -34 -6 0 -30 C34 -6 34 22 0 60 Z" fill="url(#hGold)" stroke="#B87604" stroke-width="4"/>
+    <circle cx="0" cy="0" r="13" fill="#FFFFFF" stroke="#B87604" stroke-width="3"/>
+    <path d="M-6 0 h12 M0 -6 v12" stroke="#22519B" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- ============ SNOWFLAKES / SPARKLES ============ -->
+  <use href="#flake" transform="translate(180 200) scale(1.1)"/>
+  <use href="#flake" transform="translate(470 170) scale(0.8)"/>
+  <use href="#flake" transform="translate(120 300) scale(0.7)"/>
+  <use href="#flake" transform="translate(540 400) scale(0.9)"/>
+
+  <g fill="#FFE68A">
+    <path d="M410 120 q5 12 17 17 q-12 5 -17 17 q-5 -12 -17 -17 q12 -5 17 -17 z"/>
+    <circle cx="250" cy="150" r="4"/>
+    <circle cx="560" cy="300" r="4"/>
+    <circle cx="90" cy="420" r="4"/>
+  </g>
+</svg>

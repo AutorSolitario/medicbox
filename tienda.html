@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda | MEDIC BOX</title>
+  <meta name="description" content="Explora estuches térmicos, geles, control de temperatura, accesorios y kits MEDIC BOX. Filtra por categoría y encuentra la solución ideal para tu tratamiento.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="page-head">
+    <div class="contenedor">
+      <p class="migas"><a href="index.html">Inicio</a> / Tienda</p>
+      <h1>Nuestra tienda</h1>
+      <p>Todo lo que necesitas para transportar y cuidar tu tratamiento, en un solo lugar.</p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="tienda-controles">
+        <div class="buscador">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" id="buscador" placeholder="Buscar productos..." aria-label="Buscar productos">
+        </div>
+        <div class="filtros" id="filtros"></div>
+      </div>
+      <div class="productos" id="grid-tienda"></div>
+      <p id="sin-resultados" class="carrito-vacio oculto"><i class="fa-solid fa-magnifying-glass"></i><br>No encontramos productos con esos criterios.</p>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    let filtroActivo = "todos", textoBusqueda = "";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Filtro inicial desde la URL (?cat=)
+      const params = new URLSearchParams(location.search);
+      if(params.get("cat")) filtroActivo = params.get("cat");
+
+      // Botones de filtro
+      const cf = document.getElementById("filtros");
+      cf.insertAdjacentHTML("beforeend", `<button class="filtro ${filtroActivo==='todos'?'activo':''}" data-f="todos">Todos</button>`);
+      CATEGORIAS.forEach(c => cf.insertAdjacentHTML("beforeend",
+        `<button class="filtro ${filtroActivo===c.id?'activo':''}" data-f="${c.id}"><i class="fa-solid ${c.icono}"></i> ${c.nombre}</button>`));
+
+      cf.querySelectorAll(".filtro").forEach(b => b.addEventListener("click", () => {
+        filtroActivo = b.dataset.f;
+        cf.querySelectorAll(".filtro").forEach(x=>x.classList.remove("activo"));
+        b.classList.add("activo");
+        render();
+      }));
+      document.getElementById("buscador").addEventListener("input", e => { textoBusqueda = e.target.value.toLowerCase().trim(); render(); });
+      render();
+    });
+
+    function render(){
+      const grid = document.getElementById("grid-tienda");
+      let lista = PRODUCTOS.filter(p => filtroActivo === "todos" || p.categoria === filtroActivo);
+      if(textoBusqueda) lista = lista.filter(p => (p.nombre + " " + p.resumen + " " + nombreCategoria(p.categoria)).toLowerCase().includes(textoBusqueda));
+
+      grid.innerHTML = "";
+      document.getElementById("sin-resultados").classList.toggle("oculto", lista.length > 0);
+
+      if(filtroActivo === "todos" && !textoBusqueda){
+        // Agrupar por categoría con un título por cada una
+        CATEGORIAS.forEach(c => {
+          const items = lista.filter(p => p.categoria === c.id);
+          if(!items.length) return;
+          grid.insertAdjacentHTML("beforeend", `<h2 class="categoria-titulo">${c.nombre}</h2>`);
+          items.forEach(p => grid.insertAdjacentHTML("beforeend", tarjetaProductoHTML(p)));
+        });
+      }else{
+        lista.forEach(p => grid.insertAdjacentHTML("beforeend", tarjetaProductoHTML(p)));
+      }
+      // Reactivar animaciones para las tarjetas nuevas
+      grid.querySelectorAll(".reveal").forEach(e => e.classList.add("visible"));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 320" width="620" height="320" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <!-- Box body gradient -->
+    <linearGradient id="boxBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#3E76C2"/>
+      <stop offset="35%" stop-color="#22519B"/>
+      <stop offset="100%" stop-color="#0E2359"/>
+    </linearGradient>
+    <!-- Box lid gradient (lighter) -->
+    <linearGradient id="boxLid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#5D8FD6"/>
+      <stop offset="100%" stop-color="#2A5AA6"/>
+    </linearGradient>
+    <!-- Side shadow -->
+    <linearGradient id="sideShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#060F32"/>
+      <stop offset="100%" stop-color="#1B3B84"/>
+    </linearGradient>
+    <!-- Zipper gold -->
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#FCC606"/>
+      <stop offset="100%" stop-color="#E39605"/>
+    </linearGradient>
+    <!-- Shield gradient -->
+    <linearGradient id="shieldG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#DCE6F2"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="60%">
+      <stop offset="0%"  stop-color="#7FB4E8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#7FB4E8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <!-- soft glow behind box -->
+  <ellipse cx="165" cy="165" rx="150" ry="130" fill="url(#glow)"/>
+
+  <!-- ground shadow -->
+  <ellipse cx="170" cy="272" rx="120" ry="16" fill="#0E2359" opacity="0.18"/>
+
+  <!-- ================= BOX ================= -->
+  <!-- Handle -->
+  <path d="M120 52 q45 -34 90 0 v14 q-45 -26 -90 0 z" fill="url(#boxLid)" stroke="#0E2359" stroke-width="3"/>
+  <path d="M120 52 q45 -34 90 0" fill="none" stroke="#7FB4E8" stroke-width="3" opacity="0.6"/>
+
+  <!-- Box body -->
+  <g stroke="#0E2359" stroke-width="4" stroke-linejoin="round">
+    <!-- main body -->
+    <rect x="60" y="70" width="220" height="150" rx="22" fill="url(#boxBody)"/>
+    <!-- right side darker facet -->
+    <path d="M262 74 h6 a18 18 0 0 1 12 18 v106 a18 18 0 0 1 -18 18 h0 z" fill="url(#sideShade)" stroke="none" opacity="0.5"/>
+    <!-- lid seam -->
+    <path d="M64 118 h212" fill="none" stroke="#0E2359" stroke-width="3" opacity="0.7"/>
+    <!-- top highlight -->
+    <rect x="72" y="80" width="196" height="28" rx="14" fill="#5DADDE" opacity="0.30" stroke="none"/>
+  </g>
+
+  <!-- Zipper (gold) around lid seam -->
+  <path d="M64 118 h212" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+  <g fill="#B87604" opacity="0.85">
+    <!-- zipper teeth hint -->
+    <path d="M70 114 v8 M84 114 v8 M98 114 v8 M112 114 v8 M126 114 v8 M140 114 v8 M154 114 v8 M168 114 v8 M182 114 v8 M196 114 v8 M210 114 v8 M224 114 v8 M238 114 v8 M252 114 v8 M266 114 v8" stroke="#B87604" stroke-width="2"/>
+  </g>
+  <!-- zipper pull -->
+  <circle cx="270" cy="118" r="9" fill="url(#gold)" stroke="#B87604" stroke-width="2"/>
+  <path d="M270 127 q14 6 12 22" fill="none" stroke="url(#gold)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- ============ SHIELD + CROSS ============ -->
+  <g transform="translate(170 168)">
+    <path d="M0 -46 C22 -40 40 -40 46 -34 C46 6 34 34 0 50 C-34 34 -46 6 -46 -34 C-40 -40 -22 -40 0 -46 Z"
+          fill="url(#shieldG)" stroke="#F4AC05" stroke-width="5"/>
+    <!-- inner navy ring -->
+    <path d="M0 -38 C18 -33 33 -33 38 -28 C38 4 28 27 0 41 C-28 27 -38 4 -38 -28 C-33 -33 -18 -33 0 -38 Z"
+          fill="none" stroke="#22519B" stroke-width="2.5" opacity="0.35"/>
+    <!-- medical cross -->
+    <g fill="#22519B">
+      <rect x="-9" y="-26" width="18" height="52" rx="4"/>
+      <rect x="-26" y="-9" width="52" height="18" rx="4"/>
+    </g>
+    <!-- cross highlight -->
+    <rect x="-6" y="-23" width="5" height="46" rx="2" fill="#5DADDE" opacity="0.5"/>
+  </g>
+
+  <!-- ================= SPARKLES ================= -->
+  <g>
+    <!-- 4-point star helper shape drawn inline -->
+    <path d="M300 40 q6 14 20 20 q-14 6 -20 20 q-6 -14 -20 -20 q14 -6 20 -20 z" fill="#FCC606"/>
+    <path d="M56 34 q4 10 14 14 q-10 4 -14 14 q-4 -10 -14 -14 q10 -4 14 -14 z" fill="#5DADDE"/>
+    <path d="M285 210 q3 8 11 11 q-8 3 -11 11 q-3 -8 -11 -11 q8 -3 11 -11 z" fill="#FCC606"/>
+    <circle cx="40" cy="150" r="4" fill="#FCC606"/>
+    <circle cx="300" cy="120" r="3.5" fill="#5DADDE"/>
+    <circle cx="90" cy="30" r="3" fill="#5DADDE"/>
+  </g>
+
+  <!-- ================= TEXT ================= -->
+  <text x="335" y="130" font-size="76" font-weight="900" fill="#0E2359" letter-spacing="1">MEDIC</text>
+  <text x="335" y="205" font-size="76" font-weight="900" fill="#F4AC05" letter-spacing="6">BOX</text>
+
+  <!-- Swoosh underline -->
+  <path d="M338 232 C420 214 520 214 600 236" fill="none" stroke="#22519B" stroke-width="7" stroke-linecap="round"/>
+  <path d="M348 244 C430 262 520 262 596 246" fill="none" stroke="#F4AC05" stroke-width="7" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Kit MEDIC BOX">
+  <rect width="400" height="320" fill="#EEF4FB"/>
+  <g transform="translate(70,70)">
+    <rect x="0" y="60" width="260" height="150" rx="18" fill="#FFC107"/>
+    <rect x="0" y="60" width="260" height="150" rx="18" fill="none" stroke="#00000015" stroke-width="3"/>
+    <rect x="0" y="120" width="260" height="18" fill="#1565C0"/>
+    <rect x="121" y="60" width="18" height="150" fill="#1565C0"/>
+    <path d="M130 60 c-30 -50 -80 -20 -40 10 M130 60 c30 -50 80 -20 40 10" fill="none" stroke="#0D47A1" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

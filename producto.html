@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Producto | MEDIC BOX</title>
+  <meta name="description" content="Ficha de producto MEDIC BOX: descripción, beneficios, contenido, dimensiones, colores, compatibilidad, cuidados y garantía.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <p class="migas" style="color:var(--gris)"><a href="index.html">Inicio</a> / <a href="tienda.html">Tienda</a> / <span id="miga-nombre">Producto</span></p>
+      <div id="ficha-producto"></div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--gris" id="seccion-relacionados">
+    <div class="contenedor">
+      <h2 class="titulo-seccion centro">Productos relacionados</h2>
+      <div class="productos" id="relacionados" style="margin-top:1.5rem"></div>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    const COLOR_HEX = { Azul:"#1565C0", Amarillo:"#FFC107", Blanco:"#FFFFFF", Gris:"#546E7A", Celeste:"#4FC3F7", Negro:"#212121" };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const id = new URLSearchParams(location.search).get("id");
+      const p = id ? obtenerProducto(id) : null;
+      const cont = document.getElementById("ficha-producto");
+      if(!p){ cont.innerHTML = `<div class="carrito-vacio"><i class="fa-solid fa-box-open"></i><h2>Producto no encontrado</h2><p>Vuelve a la <a href="tienda.html">tienda</a> para ver el catálogo.</p></div>`; document.getElementById("seccion-relacionados").style.display="none"; return; }
+
+      document.title = p.nombre + " | MEDIC BOX";
+      document.getElementById("miga-nombre").textContent = p.nombre;
+      const disp = p.estado === "disponible", rev = p.estado === "revision";
+      const esEstuche = p.categoria === "estuches";
+
+      const colores = (p.colores||[]).map(c => `<span class="chip-color" title="${c}" style="background:${COLOR_HEX[c]||'#ccc'}"></span>`).join("");
+
+      let acciones;
+      if(!disp && !rev) acciones = `<button class="btn btn--linea" disabled>Próximamente</button>`;
+      else if(rev) acciones = `<a class="btn btn--acento" href="contacto.html?asunto=revision-${p.id}"><i class="fa-solid fa-screwdriver-wrench"></i> Solicitar revisión</a>`;
+      else acciones = `
+        <div class="cantidad"><button type="button" onclick="cambiarCant(-1)">−</button><input type="number" id="cant" value="1" min="1"><button type="button" onclick="cambiarCant(1)">+</button></div>
+        <button class="btn btn--primario" onclick="agregarAlCarrito('${p.id}', parseInt(document.getElementById('cant').value)||1)"><i class="fa-solid fa-cart-plus"></i> Agregar al carrito</button>
+        <button class="btn btn--acento" onclick="comprarAhora('${p.id}')">Comprar ahora</button>`;
+      const personalizar = (disp && p.personalizable) ? `<a class="btn btn--linea" href="personaliza.html" style="margin-top:.6rem">Personalizar este modelo</a>` : "";
+
+      cont.innerHTML = `
+      <div class="ficha">
+        <div class="ficha__galeria">
+          <img src="${p.img}" alt="${p.nombre}" id="img-principal">
+        </div>
+        <div>
+          <div class="producto__badges">${(p.badges||[]).map(b=>badgePill(b)).join("")}</div>
+          <h1>${p.nombre}</h1>
+          ${estrellasHTML(p.estrellas)}
+          <div class="ficha__precio">${(rev||p.desde)?"Desde ":""}${precioUSD(p.precio)}</div>
+          <p style="color:var(--gris)">${p.descripcion}</p>
+          ${esEstuche?`<div class="aviso"><i class="fa-solid fa-circle-info"></i> Consulta a tu médico o farmacéutico sobre la conservación de tu tratamiento.</div>`:""}
+          ${(p.aviso&&!esEstuche)?`<div class="aviso"><i class="fa-solid fa-circle-info"></i> ${p.aviso}</div>`:""}
+          <div class="ficha__bloque"><h3>Beneficios</h3><ul>${(p.beneficios||[]).map(b=>`<li>${b}</li>`).join("")}</ul></div>
+          <div class="ficha__bloque"><h3>Contenido incluido</h3><ul>${(p.incluye||[]).map(b=>`<li>${b}</li>`).join("")}</ul></div>
+          ${p.dimensiones?`<div class="ficha__bloque"><h3>Dimensiones / capacidad</h3><p>${p.dimensiones}</p></div>`:""}
+          ${(p.colores&&p.colores.length)?`<div class="ficha__bloque"><h3>Colores disponibles</h3><div class="chips-color">${colores}</div></div>`:""}
+          ${p.compatibilidad?`<div class="ficha__bloque"><h3>Compatibilidad</h3><p>${p.compatibilidad}</p></div>`:""}
+          <div class="ficha__bloque"><h3>Instrucciones de uso</h3><p>Congela los geles de 6 a 8 horas, colócalos alrededor del compartimento y usa los separadores para que el medicamento no toque directamente los geles. Cierra bien el estuche antes de salir.</p></div>
+          <div class="ficha__bloque"><h3>Cuidados y advertencias</h3><p>Limpia con un paño húmedo y seca al aire. No lo sumerjas en agua, no uses cloro ni lavadora. Este producto no sustituye las indicaciones de tu médico.</p></div>
+          <div class="ficha__bloque"><h3>Garantía y entrega</h3><p>Garantía de 30 días por defectos de fabricación. Entrega estimada: 1 a 5 días laborables según la ciudad (productos personalizados +2 a 4 días).</p></div>
+          <div class="producto__acciones" style="margin-top:1rem">${acciones}</div>
+          ${personalizar}
+        </div>
+      </div>`;
+
+      // Relacionados: misma categoría
+      const rel = productosPorCategoria(p.categoria).filter(x=>x.id!==p.id).slice(0,4);
+      const relCont = document.getElementById("relacionados");
+      if(rel.length){ rel.forEach(x=>relCont.insertAdjacentHTML("beforeend", tarjetaProductoHTML(x))); relCont.querySelectorAll(".reveal").forEach(e=>e.classList.add("visible")); }
+      else document.getElementById("seccion-relacionados").style.display="none";
+    });
+
+    function badgePill(b){ const map={frio:['badge--frio','fa-snowflake','Cadena de frío'],pers:['badge--pers','fa-pen','Personalizable'],envio:['badge--envio','fa-truck','Envío a domicilio']}; const m=map[b]; return m?`<span class="badge ${m[0]}"><i class="fa-solid ${m[1]}"></i> ${m[2]}</span>`:""; }
+    function cambiarCant(d){ const i=document.getElementById("cant"); i.value=Math.max(1,(parseInt(i.value)||1)+d); }
+    function comprarAhora(id){ const c=parseInt(document.getElementById("cant").value)||1; agregarAlCarrito(id,c); location.href="carrito.html"; }
+  </script>
+</body>
+</html>

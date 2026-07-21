@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar compra | MEDIC BOX</title>
+  <meta name="description" content="Completa tus datos de envío a domicilio y finaliza tu pedido MEDIC BOX.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="page-head">
+    <div class="contenedor">
+      <p class="migas"><a href="index.html">Inicio</a> / <a href="carrito.html">Carrito</a> / Pago</p>
+      <h1>Finalizar compra</h1>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <form id="form-checkout" data-web3form data-asunto="Nuevo pedido — MEDIC BOX">
+      <div class="checkout-grid">
+        <div>
+          <h2 style="font-size:1.3rem;margin-bottom:1rem">Datos de envío a domicilio</h2>
+          <div class="grid" style="grid-template-columns:1fr 1fr">
+            <div class="campo"><label for="nombre">Nombre completo *</label><input type="text" id="nombre" name="nombre" required></div>
+            <div class="campo"><label for="telefono">Teléfono *</label><input type="tel" id="telefono" name="telefono" required></div>
+          </div>
+          <div class="campo"><label for="correo">Correo electrónico *</label><input type="email" id="correo" name="correo" required></div>
+          <div class="campo"><label for="direccion">Dirección *</label><input type="text" id="direccion" name="direccion" placeholder="Calle principal, número, secundaria" required></div>
+          <div class="grid" style="grid-template-columns:1fr 1fr">
+            <div class="campo"><label for="ciudad">Ciudad *</label>
+              <select id="ciudad" name="ciudad" required>
+                <option value="">Selecciona…</option>
+                <option value="quito-cercano">Quito (zonas cercanas)</option>
+                <option value="quito-urbano">Quito (urbano)</option>
+                <option value="valles">Valles / zonas alejadas</option>
+                <option value="otra">Otra ciudad del Ecuador</option>
+                <option value="retiro">Retiro en punto acordado</option>
+              </select>
+            </div>
+            <div class="campo"><label for="referencia">Referencia</label><input type="text" id="referencia" name="referencia" placeholder="Casa esquinera, edificio…"></div>
+          </div>
+          <div class="campo"><label>Método de pago *</label>
+            <div class="opciones">
+              <label class="opcion activa" style="cursor:pointer"><input type="radio" name="pago" value="Contra entrega" checked> <b>Contra entrega</b><small>Pagas al recibir</small></label>
+              <label class="opcion" style="cursor:pointer"><input type="radio" name="pago" value="Transferencia"> <b>Transferencia</b><small>Simulada (demo)</small></label>
+            </div>
+          </div>
+          <div class="campo"><label for="notas">Notas del pedido</label><textarea id="notas" name="notas" rows="3" placeholder="Indicaciones para la entrega…"></textarea></div>
+          <div class="aviso"><i class="fa-solid fa-circle-info"></i> El pago es simulado con fines de demostración. Confirmaremos tu pedido por WhatsApp.</div>
+        </div>
+
+        <aside class="resumen-caja" id="resumen-checkout">
+          <h3 style="margin-bottom:1rem">Tu pedido</h3>
+          <div id="lineas-pedido"></div>
+          <div class="fila"><span>Subtotal</span><span id="ck-subtotal">$0.00</span></div>
+          <div class="fila"><span>Envío</span><span id="ck-envio">—</span></div>
+          <div class="fila fila--total"><span>Total</span><span id="ck-total">$0.00</span></div>
+          <input type="hidden" name="pedido_detalle" id="pedido_detalle">
+          <input type="hidden" name="pedido_total" id="pedido_total">
+          <button type="submit" class="btn btn--acento btn--bloque" style="margin-top:1rem"><i class="fa-solid fa-circle-check"></i> Confirmar pedido</button>
+          <div data-estado style="display:none"></div>
+        </aside>
+      </div>
+      </form>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    const TARIFAS = { "quito-cercano":2.50, "quito-urbano":4.00, "valles":6.00, "otra":6.50, "retiro":0 };
+    let envioActual = 0;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const items = obtenerCarrito();
+      if(!items.length){ location.href = "carrito.html"; return; }
+
+      // Selección visual del método de pago
+      document.querySelectorAll('input[name="pago"]').forEach(r => r.addEventListener("change", e => {
+        document.querySelectorAll('input[name="pago"]').forEach(x => x.closest(".opcion").classList.toggle("activa", x.checked));
+      }));
+
+      document.getElementById("ciudad").addEventListener("change", pintarResumen);
+      pintarResumen();
+
+      // Envío del pedido
+      document.getElementById("form-checkout").addEventListener("submit", (e) => {
+        // formularios.js maneja el envío (data-web3form). Antes, rellenamos los ocultos.
+        prepararDetalle();
+      }, true);
+
+      // Tras enviar con éxito, generamos orden y redirigimos
+      document.getElementById("form-checkout").addEventListener("submit", async (e) => {
+        // Esperamos a que formularios.js procese; usamos un pequeño retardo tras validación nativa
+      });
+    });
+
+    function pintarResumen(){
+      const items = obtenerCarrito();
+      const cont = document.getElementById("lineas-pedido");
+      cont.innerHTML = items.map(i => `<div class="fila"><span>${i.cantidad}× ${i.nombre}${i.personalizacion?' <small>(pers.)</small>':''}</span><span>${precioUSD(i.precio*i.cantidad)}</span></div>`).join("");
+      const subtotal = subtotalCarrito();
+      const ciudad = document.getElementById("ciudad").value;
+      envioActual = subtotal >= 50 ? 0 : (TARIFAS[ciudad] ?? 0);
+      const envioTxt = (subtotal >= 50) ? "Gratis (compra +$50)" : (ciudad ? (envioActual===0?"Gratis":precioUSD(envioActual)+" (desde)") : "Selecciona ciudad");
+      document.getElementById("ck-subtotal").textContent = precioUSD(subtotal);
+      document.getElementById("ck-envio").textContent = envioTxt;
+      document.getElementById("ck-total").textContent = precioUSD(subtotal + envioActual);
+    }
+
+    function prepararDetalle(){
+      const items = obtenerCarrito();
+      const detalle = items.map(i => `${i.cantidad}x ${i.nombre}${i.personalizacion?` [${i.personalizacion.texto}]`:''} — ${precioUSD(i.precio*i.cantidad)}`).join("\n");
+      document.getElementById("pedido_detalle").value = detalle;
+      document.getElementById("pedido_total").value = precioUSD(subtotalCarrito() + envioActual);
+    }
+
+    // Interceptamos el resultado del formulario: creamos la orden y redirigimos
+    (function engancharConfirmacion(){
+      const form = document.getElementById("form-checkout");
+      form.addEventListener("submit", function(e){
+        prepararDetalle();
+        // Observamos el contenedor de estado para detectar éxito de formularios.js
+        const estado = form.querySelector("[data-estado]");
+        const obs = new MutationObserver(() => {
+          const txt = estado.textContent || "";
+          if(estado.style.display !== "none" && (txt.includes("enviado") || txt.includes("demostración") || txt.includes("recibido"))){
+            obs.disconnect();
+            finalizarPedido();
+          }
+        });
+        obs.observe(estado, { childList:true, characterData:true, subtree:true, attributes:true });
+      });
+    })();
+
+    function finalizarPedido(){
+      const num = "MB-" + Date.now().toString().slice(-6) + "-" + Math.floor(Math.random()*90+10);
+      const resumen = {
+        numero: num,
+        detalle: document.getElementById("pedido_detalle").value,
+        total: document.getElementById("pedido_total").value,
+        nombre: document.getElementById("nombre").value,
+        pago: (document.querySelector('input[name="pago"]:checked')||{}).value || ""
+      };
+      sessionStorage.setItem("medicbox_orden", JSON.stringify(resumen));
+      vaciarCarrito();
+      setTimeout(() => location.href = "confirmacion.html", 900);
+    }
+  </script>
+</body>
+</html>

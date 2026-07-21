@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito | MEDIC BOX</title>
+  <meta name="description" content="Revisa los productos de tu carrito MEDIC BOX, ajusta cantidades y procede al pago.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="page-head">
+    <div class="contenedor">
+      <p class="migas"><a href="index.html">Inicio</a> / Carrito</p>
+      <h1>Tu carrito</h1>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="checkout-grid" id="carrito-layout">
+        <div id="carrito-items"></div>
+        <aside class="resumen-caja" id="carrito-resumen"></aside>
+      </div>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    function renderizarCarrito(){
+      const items = obtenerCarrito();
+      const cont = document.getElementById("carrito-items");
+      const resumen = document.getElementById("carrito-resumen");
+      const layout = document.getElementById("carrito-layout");
+
+      if(!items.length){
+        layout.style.gridTemplateColumns = "1fr";
+        cont.innerHTML = `<div class="carrito-vacio"><i class="fa-solid fa-cart-shopping"></i><h2>Tu carrito está vacío</h2><p>Descubre nuestros estuches y accesorios.</p><a href="tienda.html" class="btn btn--primario" style="margin-top:1rem">Ir a la tienda</a></div>`;
+        resumen.style.display = "none";
+        return;
+      }
+      resumen.style.display = "block";
+      layout.style.gridTemplateColumns = "";
+
+      cont.innerHTML = items.map(i => `
+        <div class="carrito-item">
+          <img src="${i.img}" alt="${i.nombre}">
+          <div class="carrito-item__info">
+            <b>${i.nombre}</b>
+            ${i.personalizacion ? `<small><i class="fa-solid fa-pen"></i> ${i.personalizacion.texto}</small>` : ""}
+            <small>${precioUSD(i.precio)} c/u</small>
+            <div class="cantidad" style="margin-top:.5rem">
+              <button type="button" onclick="cambiarCantidad('${i.linea}',-1)">−</button>
+              <input type="number" value="${i.cantidad}" min="1" onchange="establecerCantidad('${i.linea}', this.value)">
+              <button type="button" onclick="cambiarCantidad('${i.linea}',1)">+</button>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:800;color:var(--azul)">${precioUSD(i.precio * i.cantidad)}</div>
+            <button class="carrito-item__quitar" onclick="quitarDelCarrito('${i.linea}')" aria-label="Quitar"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        </div>`).join("");
+
+      const subtotal = subtotalCarrito();
+      const envio = subtotal >= 50 ? 0 : null; // se calcula en el checkout
+      resumen.innerHTML = `
+        <h3 style="margin-bottom:1rem">Resumen del pedido</h3>
+        <div class="fila"><span>Subtotal</span><span>${precioUSD(subtotal)}</span></div>
+        <div class="fila"><span>Envío</span><span>${envio===0 ? "Gratis" : "Se calcula en el pago"}</span></div>
+        <div class="fila fila--total"><span>Total</span><span>${precioUSD(subtotal)}</span></div>
+        <a href="checkout.html" class="btn btn--acento btn--bloque" style="margin-top:1rem"><i class="fa-solid fa-lock"></i> Proceder al pago</a>
+        <button class="btn btn--linea btn--bloque" style="margin-top:.6rem" onclick="if(confirm('¿Vaciar el carrito?')) vaciarCarrito()">Vaciar carrito</button>
+        <a href="tienda.html" class="btn btn--bloque" style="margin-top:.6rem;color:var(--gris)">Seguir comprando</a>`;
+    }
+    window.renderizarCarrito = renderizarCarrito;
+    document.addEventListener("DOMContentLoaded", renderizarCarrito);
+  </script>
+</body>
+</html>

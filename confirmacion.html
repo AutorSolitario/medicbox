@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Pedido confirmado! | MEDIC BOX</title>
+  <meta name="description" content="Tu pedido MEDIC BOX fue confirmado. Gracias por confiar en nosotros.">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="confirmacion" id="confirmacion">
+        <i class="fa-solid fa-circle-check confirmacion__icono"></i>
+        <h1>¡Pedido confirmado!</h1>
+        <p style="color:var(--gris)">Gracias por confiar en MEDIC BOX. Te contactaremos por WhatsApp para coordinar la entrega.</p>
+        <p style="margin-top:1rem">Número de orden</p>
+        <p class="orden-num" id="orden-num">—</p>
+        <div class="resumen-caja" id="orden-resumen" style="text-align:left;max-width:520px;margin:2rem auto 0"></div>
+        <div style="margin-top:1.5rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+          <a href="tienda.html" class="btn btn--primario">Seguir comprando</a>
+          <a href="https://wa.me/593999896524" target="_blank" rel="noopener" class="btn btn--linea"><i class="fa-brands fa-whatsapp"></i> Escribir a Sofy</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a class="wa-flotante" href="https://wa.me/593999896524" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="footer"></div>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/formularios.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const raw = sessionStorage.getItem("medicbox_orden");
+      if(!raw){
+        document.getElementById("confirmacion").innerHTML = `<i class="fa-solid fa-circle-info confirmacion__icono" style="color:var(--gris)"></i><h1>No hay ningún pedido reciente</h1><p style="color:var(--gris)">Explora nuestra tienda para realizar tu compra.</p><a href="tienda.html" class="btn btn--primario" style="margin-top:1rem">Ir a la tienda</a>`;
+        return;
+      }
+      const orden = JSON.parse(raw);
+      document.getElementById("orden-num").textContent = orden.numero;
+      document.getElementById("orden-resumen").innerHTML = `
+        <h3 style="margin-bottom:.8rem">Resumen</h3>
+        <p style="white-space:pre-line;color:var(--gris)">${orden.detalle}</p>
+        <div class="fila fila--total"><span>Total</span><span>${orden.total}</span></div>
+        <p style="color:var(--gris);font-size:.9rem;margin-top:.6rem">Método de pago: ${orden.pago}</p>`;
+      // La orden se muestra una sola vez
+      sessionStorage.removeItem("medicbox_orden");
+    });
+  </script>
+</body>
+</html>
