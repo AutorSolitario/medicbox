@@ -7,111 +7,73 @@
   <title>· · ·</title>
   <link rel="stylesheet" href="assets/css/sapita.css">
 </head>
-<body>
-  <div class="cielo" aria-hidden="true">
+
+<body class="cuerpo-diario">
+
+  <!-- Fondo con partículas (se llenan por JS) -->
+  <div class="cielo" id="particulas" aria-hidden="true">
     <div class="luz luz--1"></div>
     <div class="luz luz--2"></div>
   </div>
 
-  <main class="tarjeta-sapita">
-    <img class="sapito-img" src="assets/images/sapito-secreto.png" alt="Un sapito">
-    <h1 class="titulo-sapita">Encontraste nuestro pequeño rincón</h1>
-    <p class="texto-sapita">No todos los secretos están hechos para esconderse. Algunos existen para ser encontrados por la persona correcta. <span class="latido">💙</span></p>
+  <main class="tarjeta-sapita" id="acceso">
+    <img class="sapito-img" src="assets/images/sapito-secreto.png" alt="Un pequeño sapito">
 
-    <form id="form-acceso" autocomplete="off">
-      <div class="campo-sapita">
-        <label for="clave">Escribe nuestra clave</label>
-        <input type="password" id="clave" name="clave" placeholder="Algo que solo nosotros sabemos" autocomplete="off" required>
-      </div>
-      <button type="submit" class="btn-sapita" id="btn-entrar">Entrar</button>
-      <p class="mensaje-sapita" id="mensaje" role="status"></p>
-    </form>
+    <h1 class="titulo-sapita">Encontraste nuestro rincón</h1>
+    <p class="texto-sapita">
+      Algunos lugares existen solo para la persona correcta.
+      Si sabe nuestra frase, este rincón se abrirá para usted. 💙
+    </p>
+
+    <label class="etiqueta-sapita" for="frase">Escriba nuestra frase secreta</label>
+    <input
+      class="campo-sapita"
+      id="frase"
+      type="password"
+      autocomplete="off"
+      placeholder="Algo que solo nosotros sabemos"
+      aria-describedby="mensaje">
+
+    <button class="btn-sapita" id="btn-entrar" type="button">Entrar a nuestro rincón</button>
+
+    <p class="mensaje-sapita" id="mensaje" role="status" aria-live="polite"></p>
 
     <a class="enlace-sapita" href="nosotros.html">Volver</a>
   </main>
 
-  <script src="assets/js/sapita-content.js"></script>
   <script>
-    // ---- Utilidades de cifrado (Web Crypto API) ----
-    function b64aBytes(b64){ return Uint8Array.from(atob(b64), c => c.charCodeAt(0)); }
+    "use strict";
 
-    async function derivarClave(password, saltBytes, iteraciones){
-      const enc = new TextEncoder();
-      const base = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]);
-      return crypto.subtle.deriveKey(
-        { name:"PBKDF2", salt:saltBytes, iterations:iteraciones, hash:"SHA-256" },
-        base,
-        { name:"AES-GCM", length:256 },
-        true,                       // exportable: guardaremos la clave derivada (no la contraseña)
-        ["decrypt"]
-      );
+    /* La frase secreta va aquí, en texto plano (es solo un detalle romántico). */
+    const FRASE_SECRETA = "Podriacuidarmicorazon?";
+
+    const campo   = document.getElementById("frase");
+    const boton   = document.getElementById("btn-entrar");
+    const mensaje = document.getElementById("mensaje");
+
+    function normalizar(txt) {
+      return txt.trim().toLowerCase();
     }
 
-    async function intentarDescifrar(password){
-      const cfg = window.SAPITA_CIFRADO;
-      const salt = b64aBytes(cfg.salt), iv = b64aBytes(cfg.iv), ct = b64aBytes(cfg.contenido);
-      const key = await derivarClave(password, salt, cfg.iteraciones);
-      // Si la clave es incorrecta, AES-GCM lanza una excepción (fallo del tag de autenticación)
-      const plano = await crypto.subtle.decrypt({ name:"AES-GCM", iv }, key, ct);
-      return { key, texto: new TextDecoder().decode(plano) };
+    function intentarEntrar() {
+      if (normalizar(campo.value) === normalizar(FRASE_SECRETA)) {
+        // Marca de acceso válido para esta pestaña
+        sessionStorage.setItem("sapita_ok", "1");
+        mensaje.textContent = "";
+        mensaje.classList.remove("mensaje-sapita--error");
+        document.getElementById("acceso").classList.add("acceso--abriendo");
+        setTimeout(() => location.href = "para-mi-sapita.html", 550);
+      } else {
+        mensaje.textContent = "Esa no es nuestra frase secreta 💙";
+        mensaje.classList.add("mensaje-sapita--error");
+        campo.select();
+      }
     }
 
-    // ---- Manejo del formulario ----
-    const form = document.getElementById("form-acceso");
-    const msg = document.getElementById("mensaje");
-    const btn = document.getElementById("btn-entrar");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const clave = document.getElementById("clave").value;
-      msg.className = "mensaje-sapita";
-      msg.textContent = "";
-      btn.disabled = true; btn.textContent = "Abriendo…";
-
-      try{
-        const { key } = await intentarDescifrar(clave);
-        // Guardamos SOLO la clave derivada (no la contraseña) durante la sesión
-        const raw = await crypto.subtle.exportKey("raw", key);
-        const keyB64 = btoa(String.fromCharCode(...new Uint8Array(raw)));
-        sessionStorage.setItem("medicbox_sapita_key", keyB64);
-
-        msg.className = "mensaje-sapita ok";
-        msg.innerHTML = "Sabía que encontrarías el camino 💙";
-        setTimeout(() => location.href = "para-mi-sapita.html", 1300);
-      }catch(err){
-        // No damos pistas sobre qué parte está mal
-        sessionStorage.removeItem("medicbox_sapita_key");
-        msg.className = "mensaje-sapita error";
-        msg.innerHTML = "Esa no parece ser nuestra palabra, mi Sapita. Inténtalo una vez más 💙";
-        btn.disabled = false; btn.textContent = "Entrar";
-        form.querySelector("#clave").select();
-      }
-    });
-
-    // Corazones flotantes decorativos
-    (function corazones(){
-      const cielo = document.querySelector(".cielo");
-      for(let i=0;i<14;i++){
-        const e = document.createElement("div");
-        e.className = "corazon-flota";
-        e.textContent = "💙";
-        e.style.left = Math.random()*100 + "vw";
-        e.style.fontSize = (12 + Math.random()*18) + "px";
-        e.style.animationDuration = (9 + Math.random()*9) + "s";
-        e.style.animationDelay = (Math.random()*8) + "s";
-        cielo.appendChild(e);
-      }
-      for(let i=0;i<60;i++){
-        const s = document.createElement("div");
-        s.className = "estrella";
-        const t = 1 + Math.random()*2;
-        s.style.width = s.style.height = t + "px";
-        s.style.left = Math.random()*100 + "vw";
-        s.style.top = Math.random()*100 + "vh";
-        s.style.animationDelay = (Math.random()*3) + "s";
-        cielo.appendChild(s);
-      }
-    })();
+    boton.addEventListener("click", intentarEntrar);
+    campo.addEventListener("keydown", (e) => { if (e.key === "Enter") intentarEntrar(); });
+    campo.focus();
   </script>
+
 </body>
 </html>
