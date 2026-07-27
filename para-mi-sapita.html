@@ -8,133 +8,142 @@
   <link rel="stylesheet" href="assets/css/sapita.css">
 </head>
 
-<body>
+<body class="cuerpo-diario">
 
-  <div class="cielo" aria-hidden="true">
+  <div class="cielo" id="particulas" aria-hidden="true">
     <div class="luz luz--1"></div>
     <div class="luz luz--2"></div>
   </div>
 
-  <main class="hoja-sapita" id="hoja" style="visibility: hidden;">
+  <main class="hoja-diario" id="diario">
 
-    <img class="sapito-img" src="assets/images/sapito-secreto.png" alt="Un pequeño sapito">
+    <!-- ===== Cabecera ===== -->
+    <header class="diario-cabecera">
+      <img class="sapito-img" src="assets/images/sapito-secreto.png" alt="Un pequeño sapito">
+      <p class="detalle-superior">28 de julio de 2026 — para siempre en nuestra historia</p>
+      <h1 class="titulo-diario">Para mi Sapita 💙</h1>
+      <p class="subtitulo-diario">
+        Después de todo lo que vivimos, preparé este lugar para decirle algo
+        que ya no quiero volver a esconder.
+      </p>
+    </header>
 
-    <p class="detalle-superior">
-      28 de julio de 2026 — para siempre en nuestra historia
-    </p>
+    <!-- ===== CUERPO PRINCIPAL: la carta ===== -->
+    <article class="carta-interior">
+      <p class="saludo-carta">Mi Sapita 💙</p>
+      <p>
+        Si encontró este rincón, es porque quería que existiera un lugar
+        solamente para usted. Un lugar al que pueda volver cuando quiera y
+        donde siempre encuentre un pedacito de mí. Aquí quería dejarle unas
+        palabras que llevo mucho tiempo guardando, porque siento que por fin
+        llegó el momento de empezar nuestra historia de la manera en que
+        siempre soñamos.
+      </p>
 
-    <h1 class="titulo-sapita">
-      Para mi Sapita 💙
-    </h1>
+      <!-- Los dos sapitos -->
+      <div class="avatares-sapita">
+        <figure class="avatar-sapo">
+          <img src="assets/images/sapito.jpg" alt="Nuestro sapito"
+               onerror="this.closest('.avatar-sapo').classList.add('sin-foto')">
+          <figcaption>Su sapito</figcaption>
+        </figure>
+        <span class="avatar-union">💙</span>
+        <figure class="avatar-sapo">
+          <img src="assets/images/sapita.jpg" alt="Mi Sapita"
+               onerror="this.closest('.avatar-sapo').classList.add('sin-foto')">
+          <figcaption>Mi Sapita</figcaption>
+        </figure>
+      </div>
 
-    <p class="subtitulo-sapita">
-      Después de todo lo que vivimos, preparé este lugar para decirle
-      algo que ya no quiero volver a esconder.
-    </p>
+      <p>
+        Nuestra historia no fue fácil. Nos tocó vivir muchas cosas que nunca
+        imaginé. Hubo momentos muy bonitos, pero también hubo mucho dolor,
+        muchas lágrimas, muchas peleas y días en los que los dos sentimos que
+        el camino era demasiado difícil. Aun así, nunca dejamos de volver el
+        uno al otro, y creo que eso dice mucho de lo que sentimos.
+      </p>
+      <p>
+        Sé que durante mucho tiempo usted tuvo miedo. Miedo de que yo nunca
+        pudiera elegirla por completo, miedo de que nuestra historia siempre
+        fuera a medias y de que nunca pudiera sentirse realmente mía. Entiendo
+        por qué tuvo esos miedos y, si alguna vez la hice sentir así, quiero
+        pedirle perdón. Hoy quiero que poco a poco esos miedos empiecen a
+        desaparecer, porque ahora sí puedo elegirla de la manera en que
+        siempre quise hacerlo.
+      </p>
+      <p>
+        Ya no quiero una relación escondida. Ya no quiero despedirme rápido
+        por miedo a que alguien nos vea o sentir que tenemos que esperar para
+        vivir lo que sentimos. Quiero que esta vez podamos hacer las cosas
+        bien, caminar juntos, disfrutar las cosas sencillas y construir una
+        historia de la que nunca tengamos que avergonzarnos.
+      </p>
 
-    <section class="carta-sapita" aria-live="polite">
-      <!-- La carta descifrada se insertará aquí mediante JavaScript. -->
+      <div class="separador-diario" aria-hidden="true"><span>✦</span><span>💙</span><span>✦</span></div>
+
+      <!-- Foto del beso -->
+      <figure class="foto-beso reveal-scroll">
+        <img src="assets/images/beso.jpg" alt="Nosotros"
+             onerror="this.closest('.foto-beso').classList.add('sin-foto')">
+        <figcaption>Nosotros 💙</figcaption>
+      </figure>
+    </article>
+
+    <!-- ===== Nuestro Rincón (tarjetas, van antes del cierre) ===== -->
+    <div class="separador-diario" aria-hidden="true"><span>🌸</span><span>💙</span><span>🌸</span></div>
+
+    <section class="seccion-razones reveal-scroll">
+      <h2 class="titulo-seccion-diario">Nuestro Rincón</h2>
+      <p class="subtitulo-seccion-diario">Toque cada tarjeta para leer lo que guardo dentro.</p>
+
+      <div class="razones-grid" id="razones-grid"></div>
+
+      <!-- Collage de recuerdos (se amplían al tocar) -->
+      <div class="collage" id="collage">
+        <figure class="collage__foto">
+          <img src="assets/images/album-portada.jpg" alt="Nuestro recuerdo 1"
+               loading="lazy" onerror="this.closest('.collage__foto').classList.add('sin-foto')">
+        </figure>
+        <figure class="collage__foto">
+          <img src="assets/images/album-portada01.jpg" alt="Nuestro recuerdo 2"
+               loading="lazy" onerror="this.closest('.collage__foto').classList.add('sin-foto')">
+        </figure>
+        <figure class="collage__foto">
+          <img src="assets/images/album-portada02.jpg" alt="Nuestro recuerdo 3"
+               loading="lazy" onerror="this.closest('.collage__foto').classList.add('sin-foto')">
+        </figure>
+      </div>
+      <p class="collage__pie">Amplíanos para ver nuestros momentos 💙</p>
     </section>
 
-    <p class="firma-sapita">
-      Con todo mi amor,<br>
-      su Sapito 💙
-    </p>
+    <!-- ===== CIERRE: la última pregunta y la firma ===== -->
+    <div class="separador-diario" aria-hidden="true"><span>✦</span><span>💙</span><span>✦</span></div>
 
-    <button class="cerrar-sapita" id="btn-cerrar" type="button">
-      Cerrar nuestro rincón
-    </button>
+    <article class="carta-interior">
+      <p>Y para terminar, solo quiero dejarle una última pregunta…</p>
+      <p class="antes-pregunta">
+        Una pregunta que no quiero hacerle aquí, porque esa quiero hacérsela
+        mirándola a los ojos.
+      </p>
+      <div class="pregunta-noviazgo reveal-scroll">
+        <strong>¿Lista para mi pregunta? 💙</strong>
+      </div>
 
+      <p class="firma-diario">Con todo mi amor,<br>su Sapito 💙</p>
+    </article>
+
+    <button class="cerrar-sapita" id="btn-cerrar" type="button">Cerrar nuestro rincón</button>
   </main>
 
-  <script src="assets/js/sapita-content.js"></script>
+  <!-- Ventana modal reutilizable -->
+  <div class="modal-fondo" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal-caja">
+      <button class="modal-cerrar" id="modal-cerrar" type="button" aria-label="Cerrar">×</button>
+      <h3 class="modal-titulo" id="modal-titulo"></h3>
+      <div class="modal-cuerpo" id="modal-cuerpo"></div>
+    </div>
+  </div>
 
-  <script>
-    "use strict";
-
-    function b64aBytes(b64){
-      return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-    }
-
-    const keyB64 = sessionStorage.getItem("medicbox_sapita_key");
-
-    if (!keyB64) {
-      location.replace("acceso-sapita.html");
-    } else {
-      mostrarCarta().catch(() => {
-        limpiarAcceso();
-        location.replace("acceso-sapita.html");
-      });
-    }
-
-    async function mostrarCarta(){
-      const cfg = window.SAPITA_CIFRADO;
-      if (!cfg?.iv || !cfg?.contenido) {
-        throw new Error("No se encontró el contenido cifrado.");
-      }
-
-      const iv = b64aBytes(cfg.iv);
-      const contenidoCifrado = b64aBytes(cfg.contenido);
-      const claveGuardada = b64aBytes(keyB64);
-
-      const clave = await crypto.subtle.importKey(
-        "raw", claveGuardada, { name: "AES-GCM" }, false, ["decrypt"]
-      );
-
-      const contenidoDescifrado = await crypto.subtle.decrypt(
-        { name: "AES-GCM", iv }, clave, contenidoCifrado
-      );
-
-      const cartaHTML = new TextDecoder().decode(contenidoDescifrado);
-      document.querySelector(".carta-sapita").innerHTML = cartaHTML;
-
-      document.getElementById("hoja").style.visibility = "visible";
-
-      crearDecoracion();
-      revelarFotos();   // efecto de aparición de las fotos al hacer scroll
-    }
-
-    /* Muestra cada foto con una animación cuando entra en pantalla */
-    function revelarFotos(){
-      const fotos = document.querySelectorAll(".foto-reveal");
-      if (!("IntersectionObserver" in window)) {
-        fotos.forEach(f => f.classList.add("visible"));
-        return;
-      }
-      const io = new IntersectionObserver((entradas) => {
-        entradas.forEach(ent => {
-          if (ent.isIntersecting) { ent.target.classList.add("visible"); io.unobserve(ent.target); }
-        });
-      }, { threshold: 0.2 });
-      fotos.forEach(f => io.observe(f));
-    }
-
-    function crearDecoracion(){
-      const cielo = document.querySelector(".cielo");
-      for (let i = 0; i < 12; i++) {
-        const corazon = document.createElement("div");
-        corazon.className = "corazon-flota";
-        corazon.textContent = "💙";
-        corazon.style.left = `${Math.random() * 100}vw`;
-        corazon.style.fontSize = `${12 + Math.random() * 16}px`;
-        corazon.style.animationDuration = `${10 + Math.random() * 8}s`;
-        corazon.style.animationDelay = `${Math.random() * 8}s`;
-        cielo.appendChild(corazon);
-      }
-    }
-
-    function limpiarAcceso(){
-      sessionStorage.removeItem("medicbox_sapita_key");
-      const carta = document.querySelector(".carta-sapita");
-      if (carta) carta.innerHTML = "";
-    }
-
-    document.getElementById("btn-cerrar").addEventListener("click", () => {
-      limpiarAcceso();
-      document.getElementById("hoja").style.visibility = "hidden";
-      location.replace("nosotros.html");
-    });
-  </script>
-
+  <script src="assets/js/sapita-diario.js"></script>
 </body>
 </html>
